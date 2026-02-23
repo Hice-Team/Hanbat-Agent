@@ -118,3 +118,4 @@ This project is licensed under the **MIT License**.
 > “학교 안에서 가장 유용한 AI”
 
 가 되는 것을 목표로 합니다.
+>>>>>>> c0975ef64fb8da52e9f4590839efd0301edd61ca

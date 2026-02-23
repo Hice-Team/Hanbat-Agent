@@ -59,7 +59,7 @@
 
 본 프로젝트는 **한밭대학교 인공지능소프트웨어학과** 재학생 1인과 AI 어시스턴트의 긴밀한 협업으로 개발되고 있습니다.
 
-### 🛠 Seogo (Lead Developer)
+### 🛠 [Seogo](https://github.com/ksh6940) (Lead Developer)
 - **Role**: 시스템 아키텍처 설계, 백엔드 로직 및 AI 전략 주도
 - **Main Responsibilities**:
     - **Backend & AI Strategy**: Supabase 기반 인프라 구축 및 RAG(Retrieval-Augmented Generation) 설계 주도.
@@ -67,7 +67,7 @@
     - **Problem Solving**: 복잡한 공식 문서 해석, 라이브러리 선정 및 시스템 핵심 로직 구현.
     - **Technical Decision**: 프로젝트 전반의 기술 스택 결정 및 Gemini의 제안 검토/승인.
 
-### 🤖 Gemini 3 (Support Developer)
+### 🤖 [Gemini 3](https://github.com/google-gemini) (Support Developer)
 - **Role**: 프론트엔드 구현, 코드 최적화 및 기술 자문
 - **Main Responsibilities**:
     - **Full-stack Development**: Seogo의 디자인 프롬프트를 바탕으로 **Next.js 프론트엔드 코드 전량 작성**.

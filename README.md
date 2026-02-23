@@ -55,14 +55,25 @@
 이 프로젝트는 거창한 시작은 아니었을지 모릅니다.  
 하지만, **“우리 학교 안에서 가장 유용한 AI”**를 만든다는 목표 하나로 진지하게 나아갑니다.
 
-## 👥 제작자
-본 프로젝트는 한밭대학교 인공지능소프트웨어학과 재학생 **1인**에 의해 기획 및 개발되고 있습니다.
+## 👥 제작자 및 협업 체계
 
-- **Lead Developer**: **Seogo** ([@GitHub ID](https://github.com/ksh6940))
-  - **AI Strategy**: Gemini 3 API 파인튜닝 및 최적화
-  - **System Architecture**: Supabase & RAG(Retrieval-Augmented Generation) 설계
-  - **Full-stack Development**: Next.js 프론트엔드 및 Firebase Auth 인증 시스템 구축
-- **Contact**: `gsh6940@naver.com`
+본 프로젝트는 **한밭대학교 인공지능소프트웨어학과** 재학생 1인과 AI 어시스턴트의 긴밀한 협업으로 개발되고 있습니다.
+
+### 🛠 Seogo (Lead Developer)
+- **Role**: 시스템 아키텍처 설계, 백엔드 로직 및 AI 전략 주도
+- **Main Responsibilities**:
+    - **Backend & AI Strategy**: Supabase 기반 인프라 구축 및 RAG(Retrieval-Augmented Generation) 설계 주도.
+    - **Design Directing**: 프론트엔드 구현을 위한 상세 디자인 프롬프트 작성 및 UI/UX 컨셉 확립.
+    - **Problem Solving**: 복잡한 공식 문서 해석, 라이브러리 선정 및 시스템 핵심 로직 구현.
+    - **Technical Decision**: 프로젝트 전반의 기술 스택 결정 및 Gemini의 제안 검토/승인.
+
+### 🤖 Gemini 3 (Support Developer)
+- **Role**: 프론트엔드 구현, 코드 최적화 및 기술 자문
+- **Main Responsibilities**:
+    - **Full-stack Development**: Seogo의 디자인 프롬프트를 바탕으로 **Next.js 프론트엔드 코드 전량 작성**.
+    - **Debugging & Docs**: 백엔드 및 AI 기능 구현 중 발생하는 오류 설명 및 기술 문서 독해 지원.
+    - **Optimization**: 전체 코드베이스의 성능 최적화 및 가독성 향상을 위한 리팩토링 제안.
+    - **Proactive Proposal**: 사용자 경험(UX) 개선을 위한 기능 확장 및 인터페이스 개선안 제시.
   
 ## 🔒 License & Copyright
 

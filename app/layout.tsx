@@ -4,7 +4,7 @@ import "./globals.css";
 
 // Configure Nanum Gothic
 const nanumGothic = Nanum_Gothic({
-  weight: ["400", "700"], // Specify weights needed
+  weight: "400", // Specify weights needed
   subsets: ["latin"],
   variable: "--font-nanum-gothic",
 });

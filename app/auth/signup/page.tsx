@@ -27,7 +27,7 @@ export default function SignupPage() {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -36,7 +36,7 @@ export default function SignupPage() {
   };
 
   // 다음 단계로 이동하는 공통 로직
-  const moveToNextStep = (currentStep) => {
+  const moveToNextStep = (currentStep: number) => {
     if (currentStep === 1 && formData.name.length >= 2) {
       setActiveStep(2);
     } else if (currentStep === 2 && formData.department.length >= 2) {
@@ -52,7 +52,7 @@ export default function SignupPage() {
   };
 
   // 엔터 키 핸들러
-  const handleKeyDown = (e, currentStep) => {
+  const handleKeyDown = (e: React.KeyboardEvent, currentStep: number) => {
     if (e.key === 'Enter') {
       e.preventDefault(); // 폼 제출 방지
       moveToNextStep(currentStep);

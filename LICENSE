@@ -19,3 +19,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+### EXCEPTIONS & RESTRICTIONS
+
+1. Hanbat AI Model: The fine-tuned "Hanbat AI" model weights and its specific training methodology are NOT included under the MIT License. They are proprietary and remain the exclusive property of Hice Team (Closed Source).
+
+2. Security & Auth Logic: Source code related to core security, authentication flows, and private API integrations are excluded from this permission to ensure system integrity and user data protection.
+
+3. Usage: While the frontend interface is open-source, unauthorized access to or redistribution of the proprietary backend services and models is strictly prohibited.

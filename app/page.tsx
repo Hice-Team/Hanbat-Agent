@@ -16,6 +16,8 @@ import {
   Cloud, Zap, Cpu, Sparkles, Check, GraduationCap, FileText,
   Paperclip, Music, Play, FlaskConical
 } from 'lucide-react';
+import { auth } from '@/service/firebase';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 
 // === 2. Type Definitions (타입 정의) ===
 type ModelType = {
@@ -259,11 +261,26 @@ export default function App() {
   // --- 상태(State) 선언부 ---
   const [input, setInput] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Authentication state
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+
+  // Authentication Effect
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setIsAuthLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
   const [selectedModel, setSelectedModel] = useState<ModelType>(MODELS[1]);
   const [isModelMenuOpen, setIsModelMenuOpen] = useState(false);
   const [isHanbatToolsActive, setIsHanbatToolsActive] = useState(false);
   const [isPlusMenuOpen, setIsPlusMenuOpen] = useState(false);
   const [isToolMenuOpen, setIsToolMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   // [Refactor] 기존에 7개나 되던 Tool 활성화 boolean 변수들을 제거하고 selectedTool로 통합관리
   const [selectedTool, setSelectedTool] = useState<string | null>(null);
   const [isModelSwitchModalOpen, setIsModelSwitchModalOpen] = useState(false);
@@ -283,6 +300,7 @@ export default function App() {
   const plusMenuRef = useRef<HTMLDivElement>(null);
   const toolMenuRef = useRef<HTMLDivElement>(null);
   const modelMenuRef = useRef<HTMLDivElement>(null);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -519,6 +537,7 @@ export default function App() {
       }
       if (toolMenuRef.current && !toolMenuRef.current.contains(target)) setIsToolMenuOpen(false);
       if (modelMenuRef.current && !modelMenuRef.current.contains(target)) setIsModelMenuOpen(false);
+      if (profileMenuRef.current && !profileMenuRef.current.contains(target)) setIsProfileMenuOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -605,6 +624,16 @@ export default function App() {
       )}
     </button>
   );
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setIsProfileMenuOpen(false);
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+      alert("로그아웃에 실패했습니다.");
+    }
+  };
 
   return (
     <div className="flex h-[100dvh] bg-[#f8f9fa] text-gray-800 font-sans selection:bg-blue-100">
@@ -838,10 +867,57 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5">
-              <Link href="/auth/signup" className="px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 rounded-full transition-colors font-[family-name:var(--font-nanum-gothic)]">회원가입</Link>
-              <Link href="/auth/login" className="px-6 py-2 text-sm font-bold bg-[#1a73e8] text-white rounded-full hover:bg-blue-700 shadow-md transition-all active:scale-95  font-[family-name:var(--font-nanum-gothic)]">로그인</Link>
-            </div>
+            {!isAuthLoading && (
+              user ? (
+                <div className="relative" ref={profileMenuRef}>
+                  <button
+                    onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                    className="flex items-center justify-center rounded-full border border-gray-200 shadow-sm overflow-hidden hover:brightness-95 transition-all w-10 h-10"
+                    aria-label="Toggle Profile Menu"
+                  >
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg font-[family-name:var(--font-nanum-gothic)]">
+                        {user.displayName ? user.displayName.charAt(0) : user.email?.charAt(0) || 'U'}
+                      </div>
+                    )}
+                  </button>
+
+                  {isProfileMenuOpen && (
+                    <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-100 rounded-2xl shadow-xl z-50 animate-in fade-in zoom-in-95 duration-200 overflow-hidden font-[family-name:var(--font-nanum-gothic)]">
+                      <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
+                        <p className="text-sm font-bold text-gray-900 truncate">{user.displayName || "사용자"}</p>
+                        <p className="text-[11px] text-gray-500 truncate mt-0.5">{user.email}</p>
+                      </div>
+                      <div className="py-2">
+                        <button className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2 group">
+                          <Users size={16} className="text-gray-400 group-hover:text-blue-500 transition-colors" />
+                          <span className="font-medium">계정관리</span>
+                        </button>
+                        <button className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2 group">
+                          <Settings size={16} className="text-gray-400 group-hover:text-blue-500 transition-colors" />
+                          <span className="font-medium">서비스 설정</span>
+                        </button>
+                        <div className="h-px bg-gray-100 my-1 mx-2" />
+                        <button
+                          onClick={handleLogout}
+                          className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2 group"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-400 group-hover:text-red-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                          <span className="font-medium">로그아웃</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5 transition-all">
+                  <Link href="/signup" className="px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 rounded-full transition-colors font-[family-name:var(--font-nanum-gothic)]">회원가입</Link>
+                  <Link href="/login" className="px-6 py-2 text-sm font-bold bg-[#1a73e8] text-white rounded-full hover:bg-blue-700 shadow-md transition-all active:scale-95  font-[family-name:var(--font-nanum-gothic)]">로그인</Link>
+                </div>
+              )
+            )}
           </div>
         </header>
 
